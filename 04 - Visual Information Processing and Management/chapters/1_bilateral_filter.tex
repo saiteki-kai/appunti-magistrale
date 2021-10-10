@@ -1,0 +1,51 @@
+\chapter{Bilateral Filter}
+L'immagine risulta non smussata se i pixel adiacenti sono diversi tra loro. Il processo di smoothing consiste nel rendere i vicini più simili. Un modo è quello di prendere il valore medio in ogni vicinato.
+
+\section{Box Average}
+
+\begin{flalign*}
+    &BA[I]_p = \sum_{q \in S}{B_\sigma \; (\norm{p-q}) \; I_q}&
+\end{flalign*}
+%
+Può creare blocchettizzazione.
+
+\section{Gaussian Blur}
+
+\begin{flalign*}
+    &GB[I]_p = \sum_{q \in S}{G_\sigma \; (\norm{p-q}) \; I_q}&
+    & G_\sigma(x) = \frac{1}{\sigma \sqrt{2\pi}} \; exp \left(-\frac{x^2}{2\sigma^2}\right) &
+\end{flalign*}
+%
+Il parametro $\sigma$ influenza la quantità dello smoothing.\newline
+Operando globalmente sull'immagine il parametro $\sigma$ deve essere deciso in modo che il filtro sia indipendente dalla risoluzione dimensione (e.g. 2\% della diagonale).
+
+Proprietà:
+\begin{itemize}
+    \setlength\itemsep{0.1em}
+    \item convoluzione lineare
+    \item operazione ben nota
+    \item computazione efficiente
+\end{itemize}
+
+
+\section{Bilateral Filter}
+Permette di smussare l'immagine in modo diverso in base al dettaglio di un intorno, in modo da non distruggere gli edge o da non dover smussare poco con $\sigma$ molto piccoli.
+
+Il \textbf{Bilateral Filter} aggiunge alla distanza spaziale una distanza dell'intensità.
+%
+\begin{flalign*}
+    &BF[I]_p = \frac{1}{W_p} \; \sum_{q \in S}{G_{\sigma_s} \; (\norm{p-q}) \; G_{\sigma_r} \; (\lvert I_p-I_q \rvert) \; I_q}&
+\end{flalign*}
+
+\begin{itemize}
+    \setlength\itemsep{0.1em}
+    \item $G_{\sigma_s}$ controlla la dimensione del filtro
+    \item $G_{\sigma_r}$ controlla l’ampiezza dell'intensità
+    \item più è alto $\sigma_s$ più smussa anche gli edge
+\end{itemize}
+
+E' possibile estendere il filtro a altri spazi colori calcolando la distanza $\norm{C_p - C_q}$.
+
+Iterando il filtro si ottiene un’immagine che mantiene gli edge e uniforma le superfici.
+
+\newpage
