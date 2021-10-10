@@ -1,0 +1,53 @@
+\documentclass[titlepage]{report}
+\usepackage[utf8]{inputenc}
+\usepackage[OT1]{fontenc}
+\usepackage{cmbright}
+\usepackage{amsmath}
+\usepackage{fancyhdr}
+\usepackage{parskip}
+
+% info --------------------------------
+
+\title{Causal Networks}
+\author{Giuseppe Magazzù}
+\date{2021 - 2022}
+
+% fancyhdr ----------------------------
+
+\pagestyle{fancy}
+\setlength{\headheight}{13pt}
+\cfoot{\thepage}
+\lhead{}
+\rhead{\leftmark}
+
+\renewcommand{\headrulewidth}{0.1pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% document ----------------------------
+
+\begin{document}
+
+\maketitle
+
+\pagenumbering{roman}
+
+\tableofcontents
+
+\clearpage
+\pagenumbering{arabic}
+
+
+\input{chapters/01_potential_outcome}
+\input{chapters/02_associations_and_causal_graphs}
+\input{chapters/03_causal_models}
+\input{chapters/04_structural_causal_models}
+\input{chapters/05_randomized_experiments}
+\input{chapters/06_nonparametric_identification}
+\input{chapters/07_estimation}
+\input{chapters/08_unobserved_confounding}
+\input{chapters/09_instrumental_variables}
+\input{chapters/10_causal_discovery}
+\input{chapters/11_transfer_learning}
+\input{chapters/12_counterfactuals}
+
+\end{document}
