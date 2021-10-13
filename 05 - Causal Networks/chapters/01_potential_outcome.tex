@@ -1,1 +1,47 @@
 \chapter{The Potential Outcome Framework}
+
+Fundamental Problem of Causal Inference:
+\begin{itemize}
+  \item Average Treatment Effects and Missing Data Interpretation
+  \item Ignorability - Exchangeability
+  \item Conditional Exchangeability - Uncounfoundedness
+  \item Positivity - Overlap - Common Support and Extrapolation
+  \item No interference, Consistency, SUTVA
+\end{itemize}
+
+\section{Potential Outcome}
+
+\begin{itemize}
+  \item $X$ \textbf{Treatment} variabile aleatoria
+  \item $Y$ \textbf{Outcome} variabile aleatoria
+  \item $Z$ \textbf{Covariate} insieme di variabili aleatorie
+\end{itemize}
+
+Il \textbf{potential outcome} $Y(x)$ denota quale sarebbe l'\textbf{outcome} quando $X = x$, ovvero se il treatment che è stato scelto è $x$.
+Una volta che viene osservato il \textbf{potential outcome} Y(x) questo assume valore Y chiamato \textbf{outcome}.
+
+Una \textbf{popolazione} consiste di molti individui o unità.
+Ogni individuio (unità) è associato a uno o più variabili $Z$ \textbf{covariate}.
+
+Denotiamo $X$, $Y$, $Z$ dell'individuio $i$-esimo come $X_i$, $Y_i$, $Z_i$.
+
+$Y(x)$ è una variabile aleatoria\\
+$Y_i(x)$ non è trattata come una variabile aleatoria poiché specifica per l'individuo
+
+\subsection*{Individual Treatment Effect (ITE)}
+Per verificare se c'è una relazione causale tra $X$ e $Y$ si può calcolare la seguente differenza
+$\tau_i \triangleq Y_i(1) - Y_i(0)$.
+
+Se il potential outcome è uguale in entrambi i casi ($\tau_i = 0$) allora non c'è relazione causale.
+Nel caso contrario si può notare che diversi treatment portano a diversi outcome e quindi c'è una relazione causale.
+
+Non possiamo osservare tutti i \textbf{potential outcome} poiché l'osservarne uno influenzerebbe gli altri.
+I \textbf{potential outcome} che non possono essere osservati vengono chiamati \textbf{counterfactual}, mentre quello che osserviamo è il \textbf{factual}.
+%
+\begin{flalign*}
+  &Y(1) = \; ? \quad\Rightarrow\quad Y=0, X=1 \quad\Rightarrow\quad Y(1) = \; ? \qquad \text{counterfactual}&\\
+  &Y(0) = \; ? \quad\Rightarrow\quad Y=0, X=0 \quad\Rightarrow\quad Y(0) = 1 \qquad \text{factual}&
+\end{flalign*}
+
+\subsection*{Average Treatment Effect (ATE)}
+$\tau \triangleq \mathbb{E}[Y_i(1) - Y_i(0)]$

@@ -1,1 +1,129 @@
 \chapter{Flow of Associations and Causal Graphs}
+
+In un grafo diretto indichiamo con $pa(X)$ i \textbf{genitori} del nodo $X$ e $ch(Y)$ i \textbf{figli} del nodo $Y$.
+
+\begin{minipage}[c]{0.4\linewidth}
+  \begin{tikzpicture}[node distance={16mm}, thick, main/.style = {draw, circle}]
+    \node[main] (1) {X};
+    \node[main] (2) [right of=1] {Y};
+    \node[main] (3) [right of=2] {Z};
+    \draw[<-] (1) -- (2);
+    \draw[->] (2) -- (3);
+  \end{tikzpicture}
+\end{minipage}
+%
+\begin{minipage}[c]{0.4\linewidth}
+  \setlength{\abovedisplayskip}{0pt}
+  \begin{flalign*}
+    &pa(Y) = \emptyset&  ch(Y) &= \{X,Z\}&\\
+    &pa(X) = Y& ch(X) &= \emptyset&
+  \end{flalign*}
+\end{minipage}
+
+Un \textbf{cammino} è una qualsiasi sequenza di nodi adiacenti, indipendentemente dalla direzione degli archi che li collega.
+
+Un \textbf{cammino diretto} è un qualsiasi \textbf{cammino} tra due nodi in cui tutti gli archi che li collega hanno la stessa direzione.
+
+$de(Y)$ è l'insieme dei nodi \textbf{discendenti} del nodo $Y$, ovvero tutti i nodi che possono essere raggiunti da $Y$.
+
+$an(Z)$ è l'insieme dei nodi \textbf{antenati} del nodo $Z$, ovvero tutti i nodi che da $Z$ possono essere raggiunti.
+
+\begin{minipage}[c]{0.4\linewidth}
+  \begin{tikzpicture}[node distance={15mm}, thick, main/.style = {draw, circle}]
+    \node[main] (1) {Y};
+    \node[main] (2) [below left of=1] {X};
+    \node[main] (3) [below right of=1] {W};
+    \node[main] (4) [below of=2] {Z};
+    \draw[->] (1) -- (2);
+    \draw[->] (1) -- (3);
+    \draw[->] (2) -- (4);
+  \end{tikzpicture}
+\end{minipage}
+%
+\begin{minipage}[c]{0.4\linewidth}
+  $an(Z) = \{X, Y\}$\\
+  $an(Y) = \emptyset$
+
+  \bigskip
+  $de(Y) = \{X, Z, W\}$\\
+  $de(W) = \emptyset$
+\end{minipage}
+
+\section{Bayesian Networks}
+In una rete bayesiana vogliamo modellare la distribuzione di probabilità $P(X_1, \dots, X_n)$.
+Tramite la \textbf{Chain Rule} possiamo riscriverla nel seguente modo:
+\begin{flalign*}
+  P(X_1, \dots, X_n) &= P(X_1)P(X_2|X_1)P(X_3|X_1,X_2) \cdot\cdot\cdot P(X_n|X_1, \dots, X_{n-1}) & \\
+                     &= P(X_1)\prod_{i=2}^n{P(X_i|X_1, \dots, X_{i-1})} &
+\end{flalign*}
+%
+\textbf{Local Markov Assumption}:
+Un nodo $X$ è indipendente da tutti i suoi non-discendenti date l'evidenze di tutti i nodi genitori $pa(X)$.
+
+Data questa assunzione possiamo applicare la fattorizzazione della probabilità $P$.
+\begin{flalign*}
+  &P(X_1, \dots, X_n) = \prod_{i=1}^n{P(X_i|pa(X_i)})&
+\end{flalign*}
+%
+In questo modo possiamo ridurre il numero di parametri della rete.
+
+Una distribuzione di probabilità $P$ si dice che sia Markov se ogni nodo $X$ rispetta la Local Markov Assumption.
+
+L'assunzione di Markov non ci da informazioni riguardo relazioni di dipendenza tra i nodi. 
+Quindi estendiamo quest'assunzione.
+
+\textbf{Minimality Assumption}
+\begin{itemize}
+  \item Dato $pa(X)$, un nodo $X$ è indipendente da tutti i suoi non-discendenti.
+  \item I nodi adiacenti sono dipendenti.
+\end{itemize}
+
+Dato un DAG $G$, se $P$ è Markov allora sappiamo:
+\begin{itemize}
+  \item $P$ soddisfa un insieme di indipendenze specificate dalla struttura di $G$.
+  \item se $P$ soddisfa pure la Minimality Assumption, allora l'insieme di indipendenze è minimale, 
+  ovvero $P$ non soddisfa altre indipendenze in $G$. 
+  Questo equivale a dire che tutti i nodi adiacenti sono dipendenti. 
+\end{itemize} 
+
+\section{Causal Networks}
+
+Una variabile $X$ si dice \textbf{causa} di una variabile $Y$ se $Y$ può
+cambiare in risposta a un cambiamento di $X$.
+
+\textbf{Causal Edge Assumption}:
+Ogni variabile associata a un nodo è causata dalle variabili dei nodi genitori.
+
+Un \textbf{Grafo Causale} è un DAG in cui è soddisfatta la proprietà \textbf{Causal Edge Assumption}.
+
+\bigskip
+\begin{minipage}[c]{0.3\linewidth}
+  \vspace{0pt}\
+  \begin{tikzpicture}[node distance={16mm}, thick, main/.style = {draw, circle}]
+    \node[main] (1) {$x_1$};
+    \node[main] (2) [right of=1] {$x_2$};
+    \node[main] (3) [below of=1] {$x_3$};
+    \node[main] (4) [right of=3] {$x_4$};
+    \draw[->] (1) -- (2);
+    \draw[->] (1) -- (3);
+    \draw[->] (2) -- (3);
+    \draw[->] (3) -- (4);
+  \end{tikzpicture}
+\end{minipage}
+%
+\begin{minipage}[c]{0.4\linewidth}
+  $X_1$ causa direttamente $X_2$ e $X_3$\\
+  $X_2$ causa direttamente $X_3$\\
+  $X_3$ causa direttamente $X_4$
+
+  \bigskip
+  $X_1$ causa indirettamente $X_4$
+\end{minipage}
+
+\vspace{20mm}
+
+\textbf{Association Flow}
+
+Chain, Fork, Collider, ...
+
+\section{D-Separation}
