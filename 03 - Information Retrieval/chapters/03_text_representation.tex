@@ -1,0 +1,105 @@
+\chapter{Text Representation}
+% exploration analysis: (text clustering, ...) unsupervised learning beacause i don't have precedent knowledge
+% Dopo aver fatto il processing sul testo si ottiene un insieme di discrettori, indici.
+
+Un modo semplice per rappresentare un testo è una matrice in cui sulle righe ci sono termini estratti dal corpus (vocabolario) e sulle colonne i documenti.
+
+\textbf{Incidence Matrix}: specifica la presenza di un termine in un ogni documento.
+
+Ogni documento può essere rappresentato da un insieme di termini o da un vettore binario.
+
+\begin{minipage}[c]{0.55\linewidth}
+  \begin{tabular}{c >{\columncolor{yellow}}c c c c}
+                                 & {\color{blue} \textbf{Doc1}} & {\color{blue} \textbf{Doc2}} & {\color{blue} \textbf{Doc3}} & {\color{blue} \textbf{Doc4}} \\
+    {\color{red} \textbf{Term1}} & 1                            & 1                            & 1                            & 0                            \\
+    {\color{red} \textbf{Term2}} & 0                            & 1                            & 1                            & 1                            \\
+    {\color{red} \textbf{Term3}} & 0                            & 0                            & 1                            & 0
+  \end{tabular}
+\end{minipage}
+\hfill
+\begin{minipage}[c]{0.4\linewidth}
+  $\text{Rappresentazione di Doc1}$
+  \medskip
+
+  $R1 = \{\text{Term1}, \text{Term2}, \text{Term3}\}$\\
+  $R1 = \langle1, 0, 0\rangle$
+\end{minipage}
+
+\bigskip
+
+\textbf{Count Matrix}: specifica la numero di occorrenze di un termine in ogni documento.
+
+Un documento viene rappresentato da un vettore di occorrenze.
+
+\begin{minipage}[c]{0.55\linewidth}
+  \begin{tabular}{c >{\columncolor{yellow}}c c c c}
+                                 & {\color{blue} \textbf{Doc1}} & {\color{blue} \textbf{Doc2}} & {\color{blue} \textbf{Doc3}} & {\color{blue} \textbf{Doc4}} \\
+    {\color{red} \textbf{Term1}} & 57                           & 57                           & 71                           & 133                          \\
+    {\color{red} \textbf{Term2}} & 4                            & 34                           & 17                           & 92                           \\
+    {\color{red} \textbf{Term3}} & 232                          & 2                            & 10                           & 293
+  \end{tabular}
+\end{minipage}
+\hfill
+\begin{minipage}[c]{0.4\linewidth}
+  $\text{Rappresentazione di Doc1}$
+  \medskip
+
+  $R1 = \langle157, 4, 232\rangle$
+  \medskip
+\end{minipage}
+
+Le rappresentazioni vettoriali non considerano l'ordine delle parole nel testo.
+
+\newpage
+
+\section{Bag Of Words}
+La Bag Of Words (BOW) è una rappresentazione del testo che descrive le occorenze di parole in un documento.
+
+Bag of words con N-grammi\\
+Pro: cattura le dipendenze locali e l'ordine\\
+Contro: incrementa la frequenza delle parole
+
+\subsection*{Zipf's Law}
+Descrive la frequenza di un evento (parola) in un insieme in base al suo rank.
+
+\textbf{rank}: posizione di un termine nell'ordine decrescente di frequenza dei termini in tutta la collezione.
+
+La frequenza di una parola w, f(w) è proporzionale a 1/r(w).
+%
+\begin{flalign*}
+  &f \propto \frac{1}{r} \quad\Rightarrow\quad f \cdot r = k \; \text{(costante)}&\\
+  &P_r = \frac{f}{N} = \frac{A}{r} \qquad \text{probabilità del termine di rank r, } \quad A = \frac{k}{N} \approx 0.1 &
+\end{flalign*}
+
+\subsection*{Luhn's Analysis}
+Generalmente termini con frequenza molto alta e molto bassa sono inutili per discriminare i documenti.
+\\
+\input{plots/luhn}
+
+L'abilità delle parole di discriminare il contenuto di un documento è massimo nella posizione tra i due livelli di cut-off.
+
+Vogliamo assegnare dei pesi ai termini.
+\begin{itemize}
+  \item corpus-wide: alcuni termini portano più informazione riguardo al documento
+  \item document-wide: non tutti i termini sono ugualmente importanti  
+\end{itemize}
+
+TF (Term Frequency): within document\\
+IDF (Inverse Document Frequency): whole collection
+
+Il peso di un termine deve essere proporzionale a TF e inversamente proporzionale a IDF
+
+$tf_{t,d}$: numero di occorenze del termine t nel documento d
+
+$w_{t, d} = tf_{t,d} / max_{ti} tf_{ti,d}$
+
+$df_t$ document frequency: numero di documenti che contiene t
+
+$df_t \leq N$
+
+definiamo la inverse document frequency (idf)
+
+$idf_t = log(N/df_t)$
+
+tf-idf weight\\
+$w_{t, d} = tf_{t,d} / max_{ti} tf_{ti,d} * log(N/df_t)$

@@ -1,0 +1,67 @@
+\chapter{Text Processing}
+In un sistema di information retrieval i documenti devono essere rappresentati in un formato interno e ordinati per essere indicizzati.
+
+\subsubsection*{Bag of Words}
+La Bag of Words è una rappresentazione matriciale in cui viene associato un identificativo a ogni documento e
+per ogni parola nella collezione viene associata la presenza o meno in ogni documento.
+Queste informazioni vengono rappresentate in una matrice di incidenza.
+
+\begin{quote}
+  \textit{%
+    Doc1: .........
+    Doc2: ......
+    Doc3: .......
+  }
+\end{quote}
+
+% TODO: add example table 
+
+\section{Tokenization}
+La \textbf{Tokenization} consiste nell'identificare e separare all'interno di un testo delle unità chiamate token.
+I token possono essere parole, frasi o simboli. Ogni token è un candidato a essere un termine significativo (index).
+
+% TODO: example
+
+Issues:
+\begin{itemize}
+  \item parole composte ("Hewlett-Packard" $\rightarrow$ "Hewlett", "Packard")
+  \item numeri, date ("Mar. 12, 1991", "12/3/1991", "(800) 234-2333")
+  \item problemi linguistici (parole composte, assenza di spazi)
+\end{itemize}
+
+La \textbf{Tokenization} si può effettuare tramite espressioni regolari o metodi statistici.
+
+\section{Normalization}
+Associare diversi possibili token alla stessa una parola.
+E' possibile ottenere le classi di equivalenza dei token rimuovendo punti, trattini, accenti.
+
+\begin{itemize}
+  \item U.S.A. $\Leftrightarrow$ USA
+  \item anti-discriminatory $\Leftrightarrow$ antidiscriminatory
+  \item résumé $\Leftrightarrow$ resume
+\end{itemize}
+
+% TODO:
+Case folding: ridurre tutte le parole in lowercase a parte alcune eccezioni.
+Thesauri and soundex: ------ sinonimi e omonimi. 
+in base a delle euristiche fonetiche è possibile ottenere delle classi di equivalenza per le mispelled
+
+\section{Stemming and Lemmatization}
+Lemmatizazion: Ridurre alla forma base 
+ladies $\Rightarrow$ lady, forgotten $\Rightarrow$ forgot
+
+Stemming: Ridurre una parola alla sua radice.
+automate, automation, automatic $\Rightarrow$ automat.
+
+\section{Stop Words Removal}
+Omettere parole molto frequenti inutili per la rappresentazione del testo.
+(Queste parole essendo presenti in più testi non portano informazione utili per distinguere i testi.)
+Esistono delle liste di Stop Words che possono essere usate per la rimozione.
+I Web Search Engine non effettuano la rimozione delle Stop Words perché sono necessarie per alcune ricerche.
+
+
+% TODO:
+N-Gram
+Le unità di testo che sono state estratte con la Tokenization possono essere unite in n-grammi. 
+
+N-grams: a contiguous sequence of N tokens from a given piece of text
