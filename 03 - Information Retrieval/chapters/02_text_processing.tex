@@ -1,19 +1,4 @@
 \chapter{Text Processing}
-In un sistema di information retrieval i documenti devono essere rappresentati in un formato interno e ordinati per essere indicizzati.
-
-\subsubsection*{Bag of Words}
-La Bag of Words è una rappresentazione matriciale in cui viene associato un identificativo a ogni documento e
-per ogni parola nella collezione viene associata la presenza o meno in ogni documento.
-Queste informazioni vengono rappresentate in una matrice di incidenza.
-
-\begin{quote}
-  \textit{%
-    Doc1: .........
-    Doc2: ......
-    Doc3: .......
-  }
-\end{quote}
-
 % TODO: add example table 
 
 \section{Tokenization}
@@ -43,11 +28,11 @@ E' possibile ottenere le classi di equivalenza dei token rimuovendo punti, tratt
 
 % TODO:
 Case folding: ridurre tutte le parole in lowercase a parte alcune eccezioni.
-Thesauri and soundex: ------ sinonimi e omonimi. 
+Thesauri and soundex: ------ sinonimi e omonimi.
 in base a delle euristiche fonetiche è possibile ottenere delle classi di equivalenza per le mispelled
 
 \section{Stemming and Lemmatization}
-Lemmatizazion: Ridurre alla forma base 
+Lemmatizazion: Ridurre alla forma base
 ladies $\Rightarrow$ lady, forgotten $\Rightarrow$ forgot
 
 Stemming: Ridurre una parola alla sua radice.
@@ -62,6 +47,6 @@ I Web Search Engine non effettuano la rimozione delle Stop Words perché sono ne
 
 % TODO:
 N-Gram
-Le unità di testo che sono state estratte con la Tokenization possono essere unite in n-grammi. 
+Le unità di testo che sono state estratte con la Tokenization possono essere unite in n-grammi.
 
 N-grams: a contiguous sequence of N tokens from a given piece of text

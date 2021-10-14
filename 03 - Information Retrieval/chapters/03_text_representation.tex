@@ -1,8 +1,12 @@
 \chapter{Text Representation}
 % exploration analysis: (text clustering, ...) unsupervised learning beacause i don't have precedent knowledge
 % Dopo aver fatto il processing sul testo si ottiene un insieme di discrettori, indici.
+In un sistema di information retrieval i documenti devono essere rappresentati in un formato interno e ordinati per essere indicizzati.
 
+\section{Bag Of Words}
 Un modo semplice per rappresentare un testo è una matrice in cui sulle righe ci sono termini estratti dal corpus (vocabolario) e sulle colonne i documenti.
+
+La \textbf{Bag Of Words (BOW)} è una rappresentazione del testo che descrive le occorenze di parole in un documento.
 
 \textbf{Incidence Matrix}: specifica la presenza di un termine in un ogni documento.
 
@@ -50,16 +54,11 @@ Un documento viene rappresentato da un vettore di occorrenze.
 
 Le rappresentazioni vettoriali non considerano l'ordine delle parole nel testo.
 
-\newpage
-
-\section{Bag Of Words}
-La Bag Of Words (BOW) è una rappresentazione del testo che descrive le occorenze di parole in un documento.
-
-Bag of words con N-grammi\\
+\textbf{Bag Of Words con N-grammi}\\
 Pro: cattura le dipendenze locali e l'ordine\\
 Contro: incrementa la frequenza delle parole
 
-\subsection*{Zipf's Law}
+\section{Zipf's Law}
 Descrive la frequenza di un evento (parola) in un insieme in base al suo rank.
 
 \textbf{rank}: posizione di un termine nell'ordine decrescente di frequenza dei termini in tutta la collezione.
@@ -71,17 +70,19 @@ La frequenza di una parola w, f(w) è proporzionale a 1/r(w).
   &P_r = \frac{f}{N} = \frac{A}{r} \qquad \text{probabilità del termine di rank r, } \quad A = \frac{k}{N} \approx 0.1 &
 \end{flalign*}
 
-\subsection*{Luhn's Analysis}
+\section{Luhn's Analysis}
 Generalmente termini con frequenza molto alta e molto bassa sono inutili per discriminare i documenti.
 \\
 \input{plots/luhn}
 
 L'abilità delle parole di discriminare il contenuto di un documento è massimo nella posizione tra i due livelli di cut-off.
 
+% TODO: formatting...
+
 Vogliamo assegnare dei pesi ai termini.
 \begin{itemize}
   \item corpus-wide: alcuni termini portano più informazione riguardo al documento
-  \item document-wide: non tutti i termini sono ugualmente importanti  
+  \item document-wide: non tutti i termini sono ugualmente importanti
 \end{itemize}
 
 TF (Term Frequency): within document\\
