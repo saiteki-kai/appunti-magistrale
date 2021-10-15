@@ -13,6 +13,7 @@
       height=8cm,
       width=10cm,
       ylabel=Frequency of words,
+      xlabel=Words by rank order,
       xtick=\empty,
       ytick=\empty,
       enlargelimits=false,
@@ -37,6 +38,9 @@
     \node[right,align=left,anchor=north west] at (axis cs:1,1)  {Upper \\ cut-off};
     \node[right,align=left,anchor=north west] at (axis cs:5,1)  {Lower \\ cut-off};
 
+    \node[align=center, rotate=45] at (axis cs:0.5,0.15)  {\tiny Common Words};
+    \node[align=center, rotate=45] at (axis cs:6.5,0.15)  {\tiny Rare Words};
+
     \coordinate (aux1) at (axis cs:3.5,{gauss(3.5,3,1)});
     \node[align=left,anchor=south west]
     at ([xshift=0.5cm,yshift=10pt]aux1)
@@ -53,8 +57,5 @@
     \draw
     (sig.west) -- ([yshift=-4pt]aux2);
 
-    \node[anchor=north west]
-    at (axis cs:0,0)
-    {Words by rank order};
   \end{axis}
 \end{tikzpicture}
