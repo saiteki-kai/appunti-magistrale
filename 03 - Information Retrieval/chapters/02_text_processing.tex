@@ -1,52 +1,74 @@
 \chapter{Text Processing}
-% TODO: add example table 
+Il text processing è una fase necessaria per pulire e preparare il testo.
 
 \section{Tokenization}
-La \textbf{Tokenization} consiste nell'identificare e separare all'interno di un testo delle unità chiamate token.
-I token possono essere parole, frasi o simboli. Ogni token è un candidato a essere un termine significativo (index).
+La tokenization consiste nell'identificare e separare all'interno di un testo delle unità chiamate token.
+I token possono essere parole, frasi, simboli o n-grammi. Ogni token è un candidato a essere un termine significativo (index).
 
-% TODO: example
+\begin{quote}
+  e.g.\ ``Text mining is to identify useful information''
 
-Issues:
+  \textbf{Tokens}:``Text'',``mining'',``is'',``to'',``identify'',``useful'',``information''
+\end{quote}
+
+Problemi:
 \begin{itemize}
-  \item parole composte ("Hewlett-Packard" $\rightarrow$ "Hewlett", "Packard")
-  \item numeri, date ("Mar. 12, 1991", "12/3/1991", "(800) 234-2333")
-  \item problemi linguistici (parole composte, assenza di spazi)
+  \item parole composte (``Hewlett-Packard'' $\rightarrow$ ``Hewlett'', ``Packard'')
+  \item numeri, date (``Mar. 12, 1991'', ``12/3/1991'', ``(800) 234-2333'')
+  \item problemi linguistici (parole composte, assenza di spazi, ...)
 \end{itemize}
 
-La \textbf{Tokenization} si può effettuare tramite espressioni regolari o metodi statistici.
+I token possono essere raggruppati in sequenze contigue di N elementi chiamate N-grammi.
+
+\begin{quote}
+  e.g.\ ``Corpus is the collection of text documents.''
+
+  \textbf{Bigrammi}:``Corpus is'', ``is the'', ``the collection'', ``collection of'', \\``of text'', ``text documents'', ``documents .''
+\end{quote}
+
+La tokenization si può effettuare tramite espressioni regolari o metodi statistici.
+
+\newpage
 
 \section{Normalization}
-Associare diversi possibili token alla stessa una parola.
-E' possibile ottenere le classi di equivalenza dei token rimuovendo punti, trattini, accenti.
+% TODO: fix
+Ad un parola possono essere associati diversi token. La normalizzazione consiste nell'ottenere le classi di equivalenza dei token rimuovendo punti, trattini, accenti.
 
-\begin{itemize}
-  \item U.S.A. $\Leftrightarrow$ USA
-  \item anti-discriminatory $\Leftrightarrow$ antidiscriminatory
-  \item résumé $\Leftrightarrow$ resume
-\end{itemize}
+\begin{quote}
+  U.S.A. $\Leftrightarrow$ USA\\
+  anti-aliasing $\Leftrightarrow$ antialiasing\\
+  résumé $\Leftrightarrow$ resume\\
+  15/10/2021 $\Leftrightarrow$ 15 Ott 2021
+\end{quote}
 
-% TODO:
-Case folding: ridurre tutte le parole in lowercase a parte alcune eccezioni.
-Thesauri and soundex: ------ sinonimi e omonimi.
-in base a delle euristiche fonetiche è possibile ottenere delle classi di equivalenza per le mispelled
+\subsection*{Lemmatization}
+Le parole vengono ridotte alla loro forma base (lemma) tenendo in considerazione l'intero vocabolario della lingua e analizzando la parte del discorso.
 
-\section{Stemming and Lemmatization}
-Lemmatizazion: Ridurre alla forma base
-ladies $\Rightarrow$ lady, forgotten $\Rightarrow$ forgot
+\begin{quote}
+  e.g.\ ``ladies'' $\Rightarrow$ ``lady'', ``forgotten'' $\Rightarrow$ ``forgot''
+\end{quote}
 
-Stemming: Ridurre una parola alla sua radice.
-automate, automation, automatic $\Rightarrow$ automat.
+\subsection*{Stemming}
+Le parole vengono ridotte a una radice (stem) rimuovendo le flessioni tramite l'eliminazione dei caratteri non necessari.
+
+\begin{quote}
+  e.g.\ ``automate(s)'', ``automation'', ``automatic'' $\Rightarrow$ ``automat''
+\end{quote}
+
+\subsection*{Case folding}
+Tutte le parole vengono convertite in lowercase a parte alcune eccezioni.
+
+\subsection*{Thesaurus and Soundex}
+% TODO: aggiungere motivo
+Un thesaurus (tesauro) è una risorsa linguistica generata manualmente da essere umani in cui è possibile esprimere relazioni tra parole (e.g.\ gerarchie, sinonimi, ...).
+
+Soundex è un algoritmo fonetico che permette di rappresentare correttamente diverse parole omofone nonostante differenze di ortografia usando delle euristiche fonetiche.
+
 
 \section{Stop Words Removal}
-Omettere parole molto frequenti inutili per la rappresentazione del testo.
-(Queste parole essendo presenti in più testi non portano informazione utili per distinguere i testi.)
-Esistono delle liste di Stop Words che possono essere usate per la rimozione.
-I Web Search Engine non effettuano la rimozione delle Stop Words perché sono necessarie per alcune ricerche.
+Le \textbf{stop words} sono le parole più frequenti all'interno di un testo che possono essere rimosse senza perdere il significato.
+Queste parole essendo presenti in più documenti non portano informazioni utili per distinguerli.
 
+Esistono delle liste di \textbf{stop words} definite in base alla lingua che possono essere usate per la rimozione.
 
-% TODO:
-N-Gram
-Le unità di testo che sono state estratte con la Tokenization possono essere unite in n-grammi.
-
-N-grams: a contiguous sequence of N tokens from a given piece of text
+I web search engine non effettuano la rimozione delle \textbf{stop words} perché sono necessarie per alcune ricerche.
