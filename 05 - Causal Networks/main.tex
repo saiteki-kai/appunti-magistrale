@@ -6,7 +6,9 @@
 \usepackage{fancyhdr}
 \usepackage{parskip}
 \usepackage{amssymb}
+\usepackage{centernot}
 \usepackage{tikz}
+\usepackage{subcaption}
 
 % info --------------------------------
 
@@ -24,6 +26,22 @@
 
 \renewcommand{\headrulewidth}{0.1pt}
 \renewcommand{\footrulewidth}{0pt}
+
+% custom ------------------------------
+
+% src: https://tex.stackexchange.com/questions/164338/looking-for-a-specific-symbol-used-in-set-theory-cant-find-on-detexify
+
+\makeatletter
+\DeclareRobustCommand{\ind}{%
+  \mathbin{\mathpalette\var@malg\perp}%
+}
+
+\newcommand\var@malg[2]{%
+  \rlap{$\m@th#1#2$}\mkern6mu{#1#2}%
+}
+\makeatother
+
+\newcommand{\nind}{\centernot\ind}
 
 % document ----------------------------
 
