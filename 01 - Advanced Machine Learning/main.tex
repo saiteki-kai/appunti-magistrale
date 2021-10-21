@@ -5,6 +5,15 @@
 \usepackage{amsmath}
 \usepackage{fancyhdr}
 \usepackage{parskip}
+\usepackage{cite}
+\usepackage{graphicx}
+\usepackage{pgfplots}
+\usepackage{amssymb}
+\usepackage{neuralnetwork}
+
+\pgfplotsset{compat=1.16}
+
+\usetikzlibrary{calc}
 
 % info --------------------------------
 
@@ -36,5 +45,14 @@
 \clearpage
 \pagenumbering{arabic}
 
+\include{chapters/01_introduction}
+\include{chapters/02_backpropagation}
+\include{chapters/03_gradient_optimization}
+\include{chapters/04_cost_functions}
+\include{chapters/06_regularization}
+
+
+\bibliography{ref.bib}{}
+\bibliographystyle{plain}
 
 \end{document}
