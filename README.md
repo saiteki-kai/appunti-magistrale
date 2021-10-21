@@ -2,7 +2,7 @@
 
 Università Milano Bicocca 2021-2022
 
-## Primo Semetre
+## Primo Semestre
 
 - Advanced Machine Learning
 - Artificial Intelligence
