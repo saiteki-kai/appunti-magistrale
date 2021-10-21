@@ -1,0 +1,57 @@
+\chapter{Text Enrichment}
+
+riconoscere una frase:
+- n-grams
+- pos tagger
+- store words position in a index
+
+POS, NER approaches:
+- rules based
+- supervised learning
+
+\section{Part-of-Speech (POS) tagging}
+Il POS tagging è il processo che marca ogni termine nel documento con un tag che corrisponde a una part-of-speech.
+
+EXAMPLE...
+
+\subsection*{Word Classes}
+words that somehow behave alike:
+\begin{itemize}
+  \item similar transformations
+  \item similar functions in the phrase
+  \item similar contexts
+\end{itemize}
+
+9 traditional word classes of POS
+(noun, verb, adjective, adverb, preposition, article, interjection, conjunction)
+
+Applicazioni:
+- Machine Translation
+- Parsing
+- Speech Recognition
+
+\subsection*{Tag Ambiguity}
+Spesso una parola può essere associata a più di un POS, quindi è necessario considerare il contesto.
+
+\begin{quote}
+  \bigskip
+  \centering
+  \begin{minipage}{0.8\linewidth}
+    \begin{itemize}
+      \item The \textbf{back} door \hfill{(adjective)}
+      \item Promised to \textbf{back} the bill \hfill{(verb)}
+      \item
+    \end{itemize}
+  \end{minipage}
+  \bigskip
+\end{quote}
+
+\subsection*{Rule Based Tagging}
+- assegno ogni possibile tag a una parole usando un dizionario
+- scrivo delle regole a mano per rimuove dei tag
+- lascio un solo tag per parola
+
+consideriamo le frasi con n-grammi
+
+\section{Named Entity Recognition (NER)}
+Trovare e classificare nomi in un testo (persone, date, luoghi, organizzazioni).
