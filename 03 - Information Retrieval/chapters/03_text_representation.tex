@@ -65,42 +65,60 @@ Descrive la frequenza di un evento (parola) in un insieme in base al suo rank.
 
 La frequenza di una parola w, f(w) è proporzionale a 1/r(w).
 %
-\begin{flalign*}
-  &f \propto \frac{1}{r} \quad\Rightarrow\quad f \cdot r = k \; \text{(costante)}&\\
-  &P_r = \frac{f}{N} = \frac{A}{r} \qquad \text{probabilità del termine di rank r, } \quad A = \frac{k}{N} \approx 0.1 &
-\end{flalign*}
+\begin{align*}
+   & f \propto \frac{1}{r} \quad\Rightarrow\quad f \cdot r = k \; \text{(costante)}                                      & \\
+   & P_r = \frac{f}{N} = \frac{A}{r} \qquad \text{probabilità del termine di rank r, } \quad A = \frac{k}{N} \approx 0.1 &
+\end{align*}
 
 \section{Luhn's Analysis}
 Generalmente termini con frequenza molto alta e molto bassa sono inutili per discriminare i documenti.
-\\
-\input{plots/luhn}
+
+\begin{center}
+  \bigskip
+  \input{plots/luhn}
+\end{center}
 
 L'abilità delle parole di discriminare il contenuto di un documento è massimo nella posizione tra i due livelli di cut-off.
 
-% TODO: formatting...
-
-Vogliamo assegnare dei pesi ai termini.
+Vogliamo assegnare dei pesi ai termini tenendo conto di questi due fattori:
 \begin{itemize}
   \item corpus-wide: alcuni termini portano più informazione riguardo al documento
   \item document-wide: non tutti i termini sono ugualmente importanti
 \end{itemize}
 
-TF (Term Frequency): within document\\
-IDF (Inverse Document Frequency): whole collection
+\pagebreak
 
-Il peso di un termine deve essere proporzionale a TF e inversamente proporzionale a IDF
+Andiamo a definire due frequenze:
+\begin{itemize}
+  \item Term Frequency (TF): frequenza di un termine all'interno di un documento
+  \item Inverse Document Frequency (IDF): frequenza di un termine in tutta la collezione
+\end{itemize}
 
-$tf_{t,d}$: numero di occorrenze del termine t nel documento d
+Il peso di un termine deve essere proporzionale a TF e inversamente proporzionale a IDF.
 
-$w_{t, d} = tf_{t,d} / max_{ti} tf_{ti,d}$
+La \textbf{term frequency} $tf_{t, d}$ è il numero di occorrenze del termine $t$ nel documento $d$ diviso il numero totale di termini nel documento.
+\begin{align*}
+  tf_{t, d} = \frac{f_{t,d}}{\sum_{t_i} f_{t_i, d}}
+\end{align*}
+%
+Questa misura può essere normalizzata dividendo per la frequenza massima nel documento $d$ per essere confrontabile tra documenti diversi.
+\begin{align*}
+  ntf_{t, d} = \frac{f_{t,d}}{max_{t_i} f_{t_i, d}}
+\end{align*}
+%
+La \textbf{inverse document frequency} $idf_t$ è la frazione inversa della frequenza di un termine in un documento in scala logaritmica.
+\begin{align*}
+  idf_t = log(N/df_t), \quad df_t \leq N
+\end{align*}
+dove $df_t$ è la \textbf{document frequency}, ovvero il numero di documenti che contengono il termine $t$, e $N$ il numero totale di documenti.
 
-$df_t$ document frequency: numero di documenti che contiene t
+Infine possiamo calcolare la funzione TF-IDF come prodotto di TF e IDF.
+\begin{align*}
+  tf\text{-}idf_{t, d} = (tf_{t,d} / max_{ti} tf_{ti,d}) * log(N/df_t)
+\end{align*}
+Questa funzione rappresenta il peso del termine $t$ all'interno di un documento $d$.
 
-$df_t \leq N$
-
-definiamo la inverse document frequency (idf)
-
-$idf_t = log(N/df_t)$
-
-tf-idf weight\\
-$w_{t, d} = tf_{t,d} / max_{ti} tf_{ti,d} * log(N/df_t)$
+\begin{itemize}
+  \item termine comune in un documento $\rightarrow$ high tf $\rightarrow$ high weight
+  \item termine raro nella collezione $\rightarrow$ high idf $\rightarrow$ high weight
+\end{itemize}
