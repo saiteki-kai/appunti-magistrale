@@ -186,12 +186,80 @@ Due nodi sconnessi non sono associati. Questo può essere dimostrato applicando 
 Due nodi connessi adiacenti sono dipendenti per la \textbf{local edge assumption}.
 
 \subsubsection*{Chain e Fork}
+\begin{minipage}{0.4\linewidth}
+  \begin{tikzpicture}[node distance={15mm}, thick, main/.style = {draw, circle}]
+    \node[main] (1) {X};
+    \node[main] (2) [right of=1] {Y};
+    \node[main] (3) [right of=2] {Z};
+    \draw[->] (1) -- (2);
+    \draw[->] (2) -- (3);
+    \draw[dashed, ->] (1) to [out=80, in=110] (2);
+    \draw[dashed, ->] (2) to [out=80, in=110] (3);
+  \end{tikzpicture}
+\end{minipage}
+\begin{minipage}{0.4\linewidth}
+  $X$ causa $Y$ che causa quindi $Z$
+\end{minipage}
 
+\begin{minipage}{0.4\linewidth}
+  \begin{tikzpicture}[node distance={15mm}, thick, main/.style = {draw, circle}]
+    \node[main] (1) {X};
+    \node[main] (2) [right of=1] {Y};
+    \node[main] (3) [right of=2] {Z};
+    \draw[<-] (1) -- (2);
+    \draw[->] (2) -- (3);
+    \draw[dashed, ->] (1) to [out=80, in=110] (2);
+    \draw[dashed, ->] (2) to [out=80, in=110] (3);
+  \end{tikzpicture}
+\end{minipage}
+\begin{minipage}{0.4\linewidth}
+  $Y$ causa $X$ e $Z$
+\end{minipage}
+
+Condizionando $Y$ in entrambi i casi, il flusso di associazione da $X$ a $Z$ viene bloccato in $Y$.
+Per la \textbf{Local Markov Assumption} $X \ind Z | Y$.
+
+\begin{proof} Data la Chain $X \rightarrow Y \rightarrow Z$,
+  $P(X, Z | Y) \overset{?}{=} P(X | Y) P(Z | Y)$
+  \begin{flalign*}
+    P(X, Y, Z) &= P(X) P(Y | X) P(Z | X, Y) \qquad & \text{(probabilità composta)} \\
+    &= P(X) P(Y | X) P(Z | X)    \qquad & \text{(fattorizzazione)}
+  \end{flalign*}
+  \begin{flalign*}
+    &P(X, Z | Y) = \frac{P(X, Y, Z)}{P(Y)} = \frac{P(X) P(Y | X) P(Z | X)}{P(Y)} = P(X | Y) P(Z | Y)&
+  \end{flalign*}
+\end{proof}
+
+\begin{proof} Data la Fork $X \leftarrow Y \rightarrow Z$,
+  $P(X, Z | Y) \overset{?}{=} P(X | Y) P(Z | Y)$
+  \begin{flalign*}
+    P(X, Y, Z) &= P(Y) P(X | Y) P(Z | X, Y) \qquad & \text{(probabilità composta)} \\
+    &= P(Y) P(X | Y) P(Z | Y)    \qquad & \text{(fattorizzazione)}
+  \end{flalign*}
+  \begin{flalign*}
+    &P(X, Z | Y) = \frac{P(X, Y, Z)}{P(Y)} = \frac{P(Y) P(X | Y) P(Z | Y)}{P(Y)} = P(X | Y) P(Z | Y)&
+  \end{flalign*}
+\end{proof}
 
 \subsubsection*{Collider}
 
+% TODO: aggiungere considerazioni
+
+\begin{proof} Data il Collider $X \rightarrow Y \leftarrow Z$,
+  $P(X, Z) \overset{?}{=} P(X) P(Z)$
+  \begin{flalign*}
+    P(X, Y) &= \sum_{y}{P(X, Z | Y=y)} \qquad & \text{(marginalizzazione)} \\
+    &= \sum_{y}{P(X)P(Z)P(Y=y|X,Z)} \qquad & \text{(probabilità composta)} \\
+    &= P(X)P(Z)\cancel{\sum_{y}{P(Y=y|X,Z)}} \qquad & \text{(somma unitaria)} \\
+    &= P(X)P(Z)
+  \end{flalign*}
+\end{proof}
+
+% TODO: riassunto
 
 \section{D-Separation}
+Il flusso di associazione è simmetrico, mentre il flusso di causazione non è simmetrico e scorre nei \textbf{direct path}.
+
 Un percorso $p$ si dice bloccato da un insieme di nodi $S$ sse
 \begin{itemize}
   \item $p$ contiene una chain $A \rightarrow B \rightarrow C$ o una fork $A \leftarrow B \rightarrow C$ e $B \in S$
@@ -209,4 +277,48 @@ La d-separazione implica l'indipendenza condizionale.
   \item Due variabili $X$ e $Y$ sono indipendenti nella distribuzione $p$ \\quando condizionate dall'insieme $S$ ($X \ind_p Y | S$).
 \end{itemize}
 
-$X \ind_G Y | S \Rightarrow X \ind_p Y | S$
+\subsection*{Global Markov Assumption}
+Dato una distribuzione $P$ che è Markov rispetto al grafo $G$, se le variabili $X$ e $Y$ sono d-separate in $G$ dato l'insieme condizionale $S$, 
+allora $X$ e $Y$ sono indipendenti in $P$ condizionalmente a $S$ ($X \ind_G Y | S \Rightarrow X \ind_p Y | S$).
+
+Global Markov Assumption $\Leftrightarrow$ Local Markov Assumption $\Leftrightarrow$ Bayesian Factorization
+
+L'associazione è la causazione scorrono nei grafi diretti. Nei grafi causali (DAG + Local Edge Assumption) la causazione scorre nei percorsi diretti.
+
+\begin{itemize}
+  \item Causal Association: associazione nei percorsi diretti
+  \item Confounding Association: nel percorso è presente una associazione non causale che rende l'associazione di non causazione
+\end{itemize}
+
+\bigskip
+\begin{center}
+  \begin{minipage}[c]{0.3\linewidth}
+    \vspace{0pt}\
+    \begin{tikzpicture}[node distance={15mm}, thick, main/.style = {draw, circle}]
+      \node[main] (1) {Z};
+      \node[main] (2) [below right of=1] {Y};
+      \node[main] (3) [below left of=1] {X};
+      \draw[->] (1) -- (2);
+      \draw[->] (1) -- (3);
+      \draw[->] (3) -- (2);
+    \end{tikzpicture}
+  \end{minipage}
+  %
+  \begin{minipage}[c]{0.5\linewidth}
+    \begin{itemize}
+      \setlength\itemsep{1em}
+      \item X $\leftarrow$ Z $\rightarrow$ Y  \hfill Confounding path
+      \item X $\rightarrow$ Y, Z $\rightarrow$ Y \hfill Causal path 
+    \end{itemize}
+  \end{minipage}
+\end{center}
+\bigskip
+
+L'associazione è simmetrica, la causazione è non simmetrica. La causazione è un sottoinsieme dell'associazione.
+
+% TODO
+\begin{itemize}
+  \item Local Markov
+  \item Minimality
+  \item Causal Edge
+\end{itemize}
