@@ -1,0 +1,44 @@
+\chapter{Statistical Language Models}
+Un Statistical LM specifica una distribuzione di probabilità su sequenze di parole.
+
+Applicazioni:
+\begin{itemize}
+  \item Machine Translation, P(\textbf{high} winds tonite) $>$ P(\textbf{large} winds tonite)
+  \item Spell Correction, P(about 15 \textbf{minutes}) $>$ P(about 15 \textbf{minuets})
+  \item Speech Recognition, P(I saw a van) $>$ P(eyes awe of an)
+\end{itemize}
+
+\section{Language Model}
+L'obiettivo di un Language Model è quello di calcolare la probabilità di una sequenza di parole $P(W) = P(w_1, w_2, ..., w_n)$.
+
+Con una Language Model è possibile calcolare anche la probabilità di una parola data una sequenza $P(w_5 | w_1, w_2, w_3, w_4)$.
+
+Possiamo calcolare la probabilità della sequenza $W$ con la chain rule:
+\begin{align*}
+  P(w_1, w_2, ..., w_n) \approx \prod_{i=1}^n {P(w_i | w_1, ..., w_{i-1})}
+\end{align*}
+
+Con la Markov Assumption possiamo ridurre il numero di parole da condizionare
+\begin{align*}
+  P(w_1, w_2, ..., w_n) \approx \prod_{i=1}^n {P(w_i | w_{i-k}, ..., w_{i-1})}
+\end{align*}
+
+Un Language Model è ben formato su un alfabeto $\Omega$ se $\displaystyle \sum_{s\in\Omega}P(s)=1$.
+
+\section*{N-grams Language Model}
+La probabilità di una parola di una sequenza dipende dalle N parole precedenti.
+Nel caso di uni-grammi la probabilità non dipende da nessuna altra parola. 
+
+Sparsity Problems
+\begin{enumerate}
+  \item La parola di cui vogliamo calcolare la probabilità non è presente nel corpus.\\ Soluzione: aggiungere una $\delta$ alla frequenza di ogni parola (smoothing).
+  \item La sequenza di cui vogliamo calcolare la probabilità non è presente nel corpus.\\ Soluzione: ridurre la sequenza da condizionare.
+\end{enumerate}
+
+I modelli con uni-grammi sono i più usati
+\begin{itemize}
+  \item Spesso sono sufficienti per valutare l'argomento
+  \item Con N più grandi ci sono più problemi di sparsity
+  \item Implementazione semplice ed efficiente
+\end{itemize}
+
