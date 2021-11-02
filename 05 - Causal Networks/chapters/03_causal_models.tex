@@ -67,7 +67,7 @@ Un intervention su una variabile $X_i$ cambia solo il suo causal mechanism, non 
 
 \subsection*{Modularity - Independence Mechanism - Invariance}
 Se interveniamo su un insieme di variabili $S$ fissando valori costanti,
-allora per ogni $X_i \in \{X_1, ..., X_n\}$
+allora per ogni variabile $X_i \in \{X_1, ..., X_n\}$ possiamo affermare che:
 \begin{enumerate}
   \item Se $X_i \in S$, allora $P(X_i = x| pa(X_i)) = 1$ se $x$ è il valore assegnato dall'intervention $do(X_i=x)$, 0 altrimenti
   \item Se $X_i \not\in S$, allora $P(X_i = x | pa(X_i))$ rimane inalterato
@@ -76,11 +76,73 @@ allora per ogni $X_i \in \{X_1, ..., X_n\}$
 Data una variabile $X_i \in S$, un valore $x$ di $X_i$ è \textbf{consistente} con l'intervention su $X_i$ se $x$ è uguale al valore che è stato assegnato nell'intervention $do(X_i=x)$.
 
 Una volta impostato il valore di $X_i$ non importa più il valore dei nodi genitori $pa(X_i)$, poiché al variare di $pa(X_i)$ non varierà il valore di $X_i$.
-Questo possiamo rappresentarlo attraverso un grafo (manipolato) in cui si rimuovono gli archi entranti, se non ce ne sono l'intervention non ha conseguenze sulla distribuzione post-intervention
+
+Questo possiamo rappresentarlo attraverso un grafo (detto manipulated graph o \textbf{post-intervention graph}) in cui si rimuoviamo gli archi entranti in $X_i$; se non ce ne sono, vuol dire che l'intervention non ha conseguenze sulla distribuzione post-intervention
 $p(y|do(x)) = p(y|x)$.
 
 \subsection*{Adjustment Formula}
-\# TODO
+Dato il seguente grafo causale e il suo corrispettivo grafo manipolato a seguito dell'intervention sulla variabile $X$.
+
+\begin{center}
+  \begin{minipage}{0.4\linewidth}
+    \centering
+    \begin{tikzpicture}[node distance={15mm}, thick, main/.style = {draw, circle}]
+      \node[main] (1) {Z};
+      \node[main] (2) [below right of=1] {Y};
+      \node[main] (3) [below left of=1] {X};
+      \draw[->] (1) -- (2);
+      \draw[->] (1) -- (3);
+      \draw[->] (3) -- (2);
+    \end{tikzpicture}
+
+    pre-intervention graph
+  \end{minipage}
+  %
+  {\Large$\overset{do(X = x)}{\Longrightarrow}$}
+  %
+  \begin{minipage}{0.4\linewidth}
+    \centering
+    \begin{tikzpicture}[node distance={15mm}, thick, main/.style = {draw, circle}]
+      \node[main] (1) {Z};
+      \node[main] (2) [below right of=1] {Y};
+      \node[main] (3) [below left of=1] {X};
+      \draw[->] (1) -- (2);
+      \draw[->] (3) -- (2);
+    \end{tikzpicture}
+
+    post-intervention graph
+  \end{minipage}
+\end{center}
+
+Possiamo osservare sotto la condizione di \textbf{modularity assumption} che:
+\begin{enumerate}
+  \item $P(Y = y|do(X = x)) = Pm (Y = y|X = x)$
+  \item $P(Z|do(X=x)) = P_m(Z|x) = P(Z)$
+  \item $P(Y|do(X=x), Z) = P_m(Y|x,Z) = P(Y|x,Z)$
+\end{enumerate}
+
+La probabilità marginale $P(Z)$ e la probabilità condizionale $P(Y|x,Z)$ sono invarianti all'intervention.
+Questo perché il causal mechanism di X non influenza il causal mechanism delle altre variabili.
+
+Date le seguenti uguaglianze:
+
+\begin{enumerate}
+  \item $P_m(Z=z | X=x) = P_m(Z=z) = P(Z=z)$
+  \item $P_m(Y=y|X=x, Z=z) = P(Y=y|X=x, Z=z)$
+\end{enumerate}
+
+Possiamo scrivere la seguente interventional expression:
+\begin{align*}
+  P(Y=y|do(X=x)) & = P_m(Y=y|X=x)                            \\
+                 & = \sum_z P_m(Y=y|X=x, Z=z) P_m(Z=z | X=x) \\
+                 & = \sum_z P_m(Y=y|X=x, Z=z) P_m(Z=z)       \\
+                 & = \sum_z P(Y=y|X=x, Z=z) P(Z=z)
+\end{align*}
+
+Il causal mechanism di $Y$,  $P(Y=y|X=x, Z=z)$ viene aggiustato, pesato da $Z$ (adjusting/controlling for $Z$).
+
+Quest'espressione prende il nome di Adjustment Formula e ci permette di rispondere a una interventional query solo usando 
+dati osservazionali. 
 
 \subsection*{Causal Effect Rule}
 Generalizzazione della adjustment formula.
