@@ -1,0 +1,65 @@
+\chapter{Agents}
+
+Un \textbf{agente} è qualsiasi cosa che può essere vista come percepente del suo ambiente attraverso sensori e che agisce sull'ambiente attraverso degli attuatori.
+
+Per \textbf{percezione} si intende un'insieme di input percettivi di un agente in un determinato istante.
+Una \textbf{sequenza di percezione} è l'intera storia delle percezioni che l'agente ha percepito fino ad oggi.
+
+La scelta dell'azione da compiere di un agente può dipendere dall'intera sequenza di percezione, ma non da qualcosa che non ha percepito.
+
+Il comportamento di un agente è descritto da una \textbf{agent function} che mappa una sequenza di percezioni ad azioni.
+L'agent function (astrazione) viene implementata da un \textbf{agent program} (implementazione).
+
+\section{Rational Agent}
+Quando un agente viene messo in un ambiente genera una sequenza di azioni in base alle percezioni che riceve.
+Questa sequenza causa l'ambiente ad andare attraverso una sequenza di stati.
+
+Se la sequenza di stati è \textbf{desiderabile}, allora l'agente ha performato bene. 
+La desiderabilità è data da una \textbf{performance measure} che valuta una sequenza di stati dell'ambiente.
+
+\subsection{Razionalità}
+La \textbf{razionalità} di un agente dipende da quattro cose:
+\begin{itemize}
+  \item la performance measure che definisce criterio di successo
+  \item la conoscenza a priori dell'ambiente da parte dell'agente
+  \item le azioni che l'agente può eseguire
+  \item la sequenza di percezione dell'agente
+\end{itemize}
+
+Per ogni possibile sequenza di percezione, un \textbf{agente razionale} dovrebbe scegliere un'azione che ci si aspetta massimizzi la performance measure,
+date le evidenze fornite dalla sequenza di percezioni e da una qualsiasi conoscenza a priori.
+
+\subsection{Onniscienza e Apprendimento}
+Un agente \textbf{onnisciente} conosce i risultato attuale e agisce di conseguenza.
+
+La razionalità massimizza la performance attesa, mentre la perfezione massimizza la performance attuale.
+
+Una parte importante della razionalità è l'\textbf{information gathering}, ovvero fare delle azioni al fine di modificare le percezioni future.
+
+Un agente razionale deve, oltre a raccogliere informazioni, \textbf{imparare} il più possibile da quello che percepisce. 
+La configurazione iniziale di un agente può contenere della conoscenza a priori dell'ambiente che con l'esperienza può essere modificata e aumentata.
+
+\subsection{Autonomia}
+Un agente razionale dovrebbe anche essere \textbf{autonomo}, ovvero affidarsi unicamente alle sue percezioni e compensare ad una conoscenza a priori parziale o scorretta fornita 
+dal suo progettatore. Dopo una sufficiente esperienza dell'ambiente il comportamento può diventare indipendente dalla conoscenza a priori. 
+
+\section{Task Environment}
+Per definire un agente è necessario determinare il suo \textbf{task environment} che è descritto da 
+performance measure, ambiente, attuatori e sensori. 
+Questi insieme di fattori può essere riassunto con l'acronimo \textbf{PEAS} (\textbf{P}erformance, \textbf{E}nvironment, \textbf{A}ctuators, \textbf{S}ensors).
+
+\subsection{Fully Observable vs Partially Observable}
+\subsection{Single Agent vs Multi-Agent}
+\subsection{Competitive vs Cooperative}
+\subsection{Deterministic vs Stochastic}
+\subsection{Episodic vs Sequential}
+\subsection{Static vs Dynamic}
+\subsection{Discrete vs Continuos}
+\subsection{Known vs Unknown}
+
+\section{Agent Structure}
+\subsection{Simple Reflex Agents}
+\subsection{Model-based Reflex Agents}
+\subsection{Goal-based agents}
+\subsection{Utility-based agents}
+\subsection{Learning agents}
