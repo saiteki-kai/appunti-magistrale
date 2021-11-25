@@ -1,34 +1,38 @@
 \chapter{Text Enrichment}
 
-riconoscere una frase:
-- n-grams
-- pos tagger
-- store words position in a index
+Il text enrichment permette di avere informazioni aggiuntive sul testo che possono aiutare a
+fare delle analisi più approfondite e predizioni più precise.
 
-POS, NER approaches:
-- rules based
-- supervised learning
+Due tecniche che ci permetto di arricchire il testo sono il POS tagging e la Named Entity Recognition.
+Entrambe le tecniche possono essere applicate usando degli insieme di regole o degli approcci di apprendimento supervisionato.
 
 \section{Part-of-Speech (POS) tagging}
 Il POS tagging è il processo che marca ogni termine nel documento con un tag che corrisponde a una part-of-speech.
-
-EXAMPLE...
+%
+{\small\begin{align*}
+  \frac{\text{A}}{\color{orange}{\textbf{DET}}} +
+  \frac{\text{dog}}{\color{teal}{\textbf{NOUN}}} +
+  \frac{\text{is}}{\color{red}{\textbf{AUX}}} +
+  \frac{\text{chasing}}{\color{blue}{\textbf{VERB}}} +
+  \frac{\text{a}}{\color{orange}{\textbf{DET}}} +
+  \frac{\text{boy}}{\color{teal}{\textbf{NOUN}}} +
+  \frac{\text{in}}{\color{violet}{\textbf{PREP}}} +
+  \frac{\text{the}}{\color{orange}{\textbf{DET}}} +
+  \frac{\text{park}}{\color{teal}{\textbf{NOUN}}}
+\end{align*}}%
 
 \subsection*{Word Classes}
-words that somehow behave alike:
+Le classi di parole hanno le seguenti caratteristiche:
 \begin{itemize}
-  \item similar transformations
-  \item similar functions in the phrase
-  \item similar contexts
+  \item hanno trasformazioni simili
+  \item hanno le stesse funzioni nella frase
+  \item appaiono in un contesti simili
 \end{itemize}
+Le word class possono essere chiamate anche part-of-speech, lexical categories, morphological classes, lexical tags o POS.
 
-9 traditional word classes of POS
-(noun, verb, adjective, adverb, preposition, article, interjection, conjunction)
-
-Applicazioni:
-- Machine Translation
-- Parsing
-- Speech Recognition
+Per effettuare il POS tagging è necessario scegliere un insieme di tag da associare alle parole.
+Comunemente vengono identificate 9 classi di POS: noun, verb, adjective, adverb, preposition, article, interjection e conjunction.
+Comunque è possibile usare più classi e sottoclassi.
 
 \subsection*{Tag Ambiguity}
 Spesso una parola può essere associata a più di un POS, quindi è necessario considerare il contesto.
@@ -40,18 +44,51 @@ Spesso una parola può essere associata a più di un POS, quindi è necessario c
     \begin{itemize}
       \item The \textbf{back} door \hfill{(adjective)}
       \item Promised to \textbf{back} the bill \hfill{(verb)}
-      \item
+      \item Win the voters \textbf{back} \hfill (adverb)
+      \item On my \textbf{back} \hfill (singular noun)
     \end{itemize}
   \end{minipage}
   \bigskip
 \end{quote}
 
-\subsection*{Rule Based Tagging}
-- assegno ogni possibile tag a una parole usando un dizionario
-- scrivo delle regole a mano per rimuove dei tag
-- lascio un solo tag per parola
+E' possibile disambiguare le parole considerando il contesto. Spesso dei tag co-occorrono con altri tag (e.g. gli articoli e i sostantivi).
 
-consideriamo le frasi con n-grammi
+\subsection*{Rule Based Tagging}
+Si assegna ad ogni parola tutti i possibili tag usando un dizionario.
+Tramite delle regole scritte a mano, vengono rimossi alcuni tag finché non ne rimane uno solo.
 
 \section{Named Entity Recognition (NER)}
-Trovare e classificare nomi in un testo (persone, date, luoghi, organizzazioni).
+Il Named Entity Recognition (NER) consiste nel trovare e classificare entità in un testo (persone, date, luoghi, organizzazioni).
+
+Il NER necessita di definire delle categorie di interesse.
+Tre categorie universalmente accettate sono: persone, luoghi e organizzazioni.
+Altri task possono richiedere il riconoscimento di data/ora, espressioni, misure e in alcuni casi
+è utile usare entità specifiche del dominio (farmaci, navi, elementi chimici, ...).
+
+IL NER risulta difficile nei casi di \textbf{metonimia}, ovvero la sostituzione di un termine con un'altro
+che ha una certa relazione con la prima e mantiene in un certo modo il significato.
+
+\begin{itemize}
+  \item “mi piace leggere Dante” / le opere di Dante (scambia l'autore per l'opera)
+  \item “confidare nell'amicizia” / negli amici (scambia l'astratto per il concreto)
+  \item “ha una buona penna” / sa scrivere bene (scambia la causa per l'effetto)
+\end{itemize}
+
+\subsection*{Rule Based}
+Si usa una lista di parole e frasi che categorizzano le entità e delle regole per verificare o trovare nuove entità.
+Le regole e le categorie dipendono dal linguaggio.
+
+\begin{itemize}
+  \item “$<$number$>$ $<$word$>$ street” per gli indirizzi
+  \item “$<$street address$>$, $<$city$>$” o “in $<$city$>$” per i nome di città
+  \item “$<$title$>$ $<$name$>$” per trovare nuovi nomi
+\end{itemize}
+
+\subsection*{Statistical Machine Learning}
+Le entità vengono trovate stimando la probabilità che appaia insieme ad altre parole.
+(e.g. “marathon” è un luogo o evento sportivo, mentre “boston marathon” è uno specifico evento sportivo.)
+Le probabilità vengono ottenute usando un training set etichettato.
+
+Un possibile approccio sono le Hidden Markov Model. Questo modello si basa sulla proprietà Markoviana, per cui
+la prossima parola in una sequenza dipende solo dalla precedente.
+L'entità viene riconosciuta dalla sequenza di parole con la probabilità più alta.
