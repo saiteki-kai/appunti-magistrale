@@ -48,18 +48,82 @@ Per definire un agente è necessario determinare il suo \textbf{task environment
 performance measure, ambiente, attuatori e sensori. 
 Questi insieme di fattori può essere riassunto con l'acronimo \textbf{PEAS} (\textbf{P}erformance, \textbf{E}nvironment, \textbf{A}ctuators, \textbf{S}ensors).
 
-\subsection{Fully Observable vs Partially Observable}
-\subsection{Single Agent vs Multi-Agent}
-\subsection{Competitive vs Cooperative}
-\subsection{Deterministic vs Stochastic}
-\subsection{Episodic vs Sequential}
-\subsection{Static vs Dynamic}
-\subsection{Discrete vs Continuos}
-\subsection{Known vs Unknown}
+\subsection*{Fully Observable vs Partially Observable}
+Quando i sensori di un agente gli danno accesso allo stato completo 
+dell'ambiente in ogni momento, allora diciamo che il task environment
+è \textbf{completamente osservabile}. Se l'agente non ha sensori, l'ambiente è \textbf{osservabile}.
+
+\subsection*{Competitive vs Cooperative}
+Un ambiente multi-agente è detto \textbf{competitivo} se massimizzare la performance measure di un agente
+minimizza la performance measure di un altro agente. Se invece tutte le performance measure vengono
+massimizzate, allora l'ambiente è detto \textbf{cooperativo}. 
+
+\subsection*{Deterministic vs Stochastic}
+Se lo stato successivo dell'ambiente è completamente determinato dallo stato corrente e dall'azione eseguita dall'agente, allora diciamo che l'ambiente è \textbf{deterministico}.
+Altrimenti è detto \textbf{stocastico}.
+
+\subsection*{Uncertain vs Certain}
+Diciamo che un ambiente è \textbf{incerto} se non è completamente osservabile o non deterministico
+
+\subsection*{Episodic vs Sequential}
+In un ambiente \textbf{episodico} l'esperienza dell'agente è divisa in più episodi. In ogni episodio l'agente
+riceve delle percezioni ed esegue una singola azione. L'episodio successivo non dipende dalle azioni prese 
+negli episodi precedenti. 
+
+In un ambiente \textbf{sequenziale}, invece, la decisione attuale può incidere sulle decisioni future.
+
+\subsection*{Static vs Dynamic}
+Se l'ambiente si aggiorna alle decisioni un agente, allora diciamo che l'ambiente è \textbf{dinamico} per quell'agente. 
+In caso contrario, è \textbf{statico}.
+
+In un ambiente statico l'agente non deve osservare lo stato dell'ambiente per decidere l'azione da eseguire.   
+
+\subsection*{Discrete vs Continuos}
+Un ambiente è \textbf{discreto} se c'è un numero fissato di azioni e percezioni al suo interno. 
+In caso contrario, è \textbf{continuo}.
+
+\subsection*{Known vs Unknown}
+In un ambiente \textbf{conosciuto} l'agente conosce il risultato di tutte le sue azioni sull'ambiente.
+Altrimenti dovrà imparare come funziona per fare delle buone scelte.
 
 \section{Agent Structure}
+L'obiettivo dell'AI è progettare un agent program che implementa la agent function che mappa le percezioni ad azioni.
+Il programma viene eseguito su un calcolatore con sensori e attuatori che costituiscono l'architettura.
+%
+\begin{align*}
+  \text{Agente} = \text{Programma} + \text{Architettura}
+\end{align*}
+
 \subsection{Simple Reflex Agents}
+Questo tipo di agente seleziona le azioni sulla base della percezione corrente, ignorando quelle passate.
+L'ambiente deve essere completamente osservabile (fully-observable). 
+
 \subsection{Model-based Reflex Agents}
+L'agente mantiene uno stato interno che dipende dallo storico delle percezioni. 
+Questo riflette in qualche modo gli aspetti non osservabili nello stato corrente.
+
+Per aggiornare lo stato interno è necessario conoscere come l'ambiente evolve indipendentemente dall'agente
+e come l'azione dell'agente influenza l'ambiente.
+
 \subsection{Goal-based agents}
+Non sempre lo stato corrente dell'ambiente è sufficiente per decidere la prossima azione.
+L'agente ha bisogno di una informazione sull'obiettivo che descrive la situazione desiderabile.
+
+Quando per raggiungere l'obiettivo, l'agente deve considerare una lunga sequenza di azioni sono necessarie
+delle fasi di ricerca e pianificazione.
+
 \subsection{Utility-based agents}
+L'obiettivo fornisce solo un'informazione binaria che nella maggior parte degli ambiente non basta 
+per avere comportamenti complessi.
+
+Si utilizza quindi una misura di performance più generale che permette di valutare gli stati dell'ambiente
+sulla base di quanto è utile.
+
+Se un agente ha più obiettivi, con la funzione di utilità è possibile gestire conflitti tra essi e pesarli in base 
+all'importanza.
+
+Un agente razionale utility-based deve modellare e tenere traccia del suo ambiente e dei suoi task.
+
 \subsection{Learning agents}
+Questa architettura permette all'agente di operare in ambienti sconosciuti e di diventare più competente.
+Inoltre non è necessario definire manualmente l'agent program.
