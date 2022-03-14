@@ -1,0 +1,52 @@
+\documentclass[titlepage]{report}
+\usepackage[utf8]{inputenc}
+\usepackage[OT1]{fontenc}
+\usepackage{cmbright}
+\usepackage{amsmath}
+\usepackage{fancyhdr}
+\usepackage{parskip}
+\usepackage{amssymb}
+\usepackage{tikz}
+\usepackage{subcaption}
+\usepackage{amsthm}
+\usepackage{biblatex}
+
+% info --------------------------------
+
+\title{Data Analytics}
+\author{Giuseppe Magazzù}
+\date{2021 - 2022}
+
+% fancyhdr ----------------------------
+
+\pagestyle{fancy}
+\setlength{\headheight}{13pt}
+\cfoot{\thepage}
+\lhead{}
+\rhead{\leftmark}
+
+\renewcommand{\headrulewidth}{0.1pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% document ----------------------------
+
+\addbibresource{ref.bib}
+
+\begin{document}
+
+\maketitle
+
+\pagenumbering{roman}
+
+\tableofcontents
+
+\clearpage
+\pagenumbering{arabic}
+
+
+\include{chapters/01_introduction}
+
+\printbibliography
+
+\end{document}
+
