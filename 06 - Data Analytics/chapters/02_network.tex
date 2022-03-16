@@ -1,0 +1,96 @@
+\chapter{Networks Analytics}
+
+\section{Statistiche Descrittive}
+
+\subsection*{Grado}
+Il \textbf{grado} $k$ di un nodo $i$ è il numero di archi entranti e uscenti.
+E' possibile distinguere il grado in \textbf{outdegree} $k_i^{\text{out}}$ e \textbf{indegree} $k_i^{\text{in}}$, il grado totale è dato dalla somma $k = k_i^{\text{in}} + k_i^{\text{out}}$.
+
+In un grafo \underline{diretto} si definisce \textbf{source} un nodo con $k_i^{\text{in}} = 0$, e \textbf{sink} $k_i^{\text{out}} = 0$.
+
+\subsubsection*{Grado Medio}
+
+Grafi non diretto:
+\begin{align*}
+   & \left\langle k \right\rangle = \frac{1}{N} \sum_{i=1}^N k_i &
+   & \left\langle k \right\rangle = \frac{2|E|}{N}               &
+\end{align*}
+
+Grafi diretto:
+\begin{align*}
+   & \left\langle k^{in} \right\rangle = \frac{1}{N} \sum_{i=1}^N k_i^{in}   &
+   & \left\langle k^{out} \right\rangle = \frac{1}{N} \sum_{i=1}^N k_i^{out} &
+\end{align*}
+\begin{align*}
+   & |E| = \left\langle k^{in} \right\rangle = \left\langle k^{out} \right\rangle &
+   & \left\langle k \right\rangle = \frac{|E|}{N}                                 &
+\end{align*}
+
+\subsubsection*{Distribuzione del Grado}
+Si definisce $P(k)$ la probabilità di un nodo di avere grado $k$ e rappresenta la \textbf{distribuzione del grado} $P(k) = \text{N}_k / \text{N}$, dove $\text{N}_k$ é il numero di nodi con grado $k$.
+
+\subsection*{Distanza e Diametro}
+La \textbf{distanza} tra due nodi A e B è definita come il numero di archi lungo lo \textit{shortest path} da A a B.
+Se i due nodi non sono \textbf{raggiungibili} tra loro la distanza é infinito.
+
+In un grafo \underline{diretto} la distanza tra due nodi non é simmetrica, $\text{d}(\text{A}, \text{B}) \not= \text{d}(\text{B}, \text{A})$.
+
+Per calcolare le distanze in un grafo si utilizza la \textbf{breadth-first search (BFS)}.
+
+Il \textbf{diametro} di un grafo é la distanza massima tra ogni coppia di nodi nel grafo.
+
+La \textbf{distanza media} in un grafo si definisce:
+
+\begin{minipage}{0.45\textwidth}
+  \centering
+
+  \begin{align*}
+    \left\langle d \right\rangle = \frac{1}{2|E_{max}|} \sum_{i, j\not=i} d_{ij}
+  \end{align*}
+  \small\textit{grafo diretto}
+\end{minipage}
+\hfill
+\begin{minipage}{0.45\textwidth}
+  \centering
+
+  \begin{align*}
+    \left\langle d \right\rangle = \frac{1}{|E_{max}|} \sum_{i, j>i} d_{ij}
+  \end{align*}
+  \small\textit{grafo indiretto}
+\end{minipage}
+
+\subsection*{Coefficiente di Clustering}
+Il \textbf{coefficiente di clustering} é una misura di quanto i nodi vicini tendono a collegarsi tra loro.
+Dato un nodo $i$ con grado $k_i$ il coefficiente di clustering é definito come:
+
+\begin{minipage}{0.45\textwidth}
+  \centering
+
+  \begin{align*}
+    C_i = \frac{2|E_i|}{k_i (k_i - 1)}
+  \end{align*}
+  \small\textit{grafo diretto}
+\end{minipage}
+\hfill
+\begin{minipage}{0.45\textwidth}
+  \centering
+  \begin{align*}
+    C_i = \frac{|E_i|}{k_i (k_i - 1)}
+  \end{align*}
+  \small\textit{grafo indiretto}
+\end{minipage}
+
+in cui l'insieme $E_i = \{e_{jk} : v_j, v_k \in N_i, e_{jk} \in E\}$ contiene tutti gli archi che sono collegati al nodo $i$ e $N_i = \{v_j : e_{ij} \in E \lor e_{ji} \in E \}$ é il suo \textbf{vicinato}, ovvero i nodi collegati direttamente a $i$.
+
+Il coefficiente di clustering assume un valore tra 0 e 1:
+\begin{itemize}
+  \item Se $C_i = 0$, allora nessun nodo del vicinato sarà collegato agli altri.
+  \item Se $C_i = 1$, allora tutti nodi del vicinato saranno collegati tra loro.
+\end{itemize}
+
+E' possibile catturare il grado di clustering di un grafo con il \textbf{coefficiente medio di clustering}, ovvero la probabilità che dato un nodo qualsiasi due nodi nel suo vicinato siano collegati tra loro.
+\begin{align*}
+  \left\langle C \right\rangle = \frac{1}{N} \sum_{i=1}^N C_i
+\end{align*}
+
+\subsection*{Centralizzazione}
