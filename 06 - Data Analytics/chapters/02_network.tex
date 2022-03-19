@@ -40,10 +40,9 @@ Per calcolare le distanze in un grafo si utilizza la \textbf{breadth-first searc
 Il \textbf{diametro} di un grafo é la distanza massima tra ogni coppia di nodi nel grafo.
 
 La \textbf{distanza media} in un grafo si definisce:
-
+\\
 \begin{minipage}{0.45\textwidth}
   \centering
-
   \begin{align*}
     \left\langle d \right\rangle = \frac{1}{2|E_{max}|} \sum_{i, j\not=i} d_{ij}
   \end{align*}
@@ -52,7 +51,6 @@ La \textbf{distanza media} in un grafo si definisce:
 \hfill
 \begin{minipage}{0.45\textwidth}
   \centering
-
   \begin{align*}
     \left\langle d \right\rangle = \frac{1}{|E_{max}|} \sum_{i, j>i} d_{ij}
   \end{align*}
@@ -62,7 +60,7 @@ La \textbf{distanza media} in un grafo si definisce:
 \subsection*{Coefficiente di Clustering}
 Il \textbf{coefficiente di clustering} é una misura di quanto i nodi vicini tendono a collegarsi tra loro.
 Dato un nodo $i$ con grado $k_i$ il coefficiente di clustering é definito come:
-
+%
 \begin{minipage}{0.45\textwidth}
   \centering
 
@@ -94,3 +92,91 @@ E' possibile catturare il grado di clustering di un grafo con il \textbf{coeffic
 \end{align*}
 
 \subsection*{Centralizzazione}
+La \textbf{centralizzazione} di una rete é un indicatore di quanto importate (centrale) sia un nodo rispetto agli altri rispetto a una certa misura di centralità.
+
+Sia $C_x(i)$ una misura di centralità per un nodo $i$ e $C_x(n^*)$ il valore massimo di centralità. Si definisce centralizzazione della rete per questa misura di centralità:
+\begin{align*}
+  C_x = \frac{\sum_{i=1}^N C_x(n^*) - C_x(i)}{\max \sum_{i=1}^N C_x(n^*) - C_x(i) }
+\end{align*}
+
+\subsubsection*{Degree Centrality}
+La misura di \textbf{grado} quantifica il numero di archi incidenti a un nodo, ovvero il numero di nodi che lo raggiungono direttamente.
+\begin{align*}
+  C_D(i) = k_i^{\text{in}}
+\end{align*}
+%
+Centralizzazione:
+\begin{align*}
+  C_D = \frac{\sum_{i=1}^N C_D(n^*) - C_D(i)}{(N - 1) (N - 2)}
+\end{align*}
+
+\subsubsection*{Betweenness Centrality}
+La misura di \textbf{betweenness} quantifica il numero di volte che un nodo si comporta da ``ponte'' in uno \textit{shortest path} tra coppie di nodi. 
+
+La betweenness del nodo $i$ si definisce:
+\begin{align*}
+  C_B(i) = \frac{\sum_{j\not=k} g_{jk}(i)}{g_{jk}}
+\end{align*}
+dove $g_{jk}$ é il numero di \textit{shortest path} tra i nodi $j$ e $k$, e $g_{jk}(i)$ é il numero di questi percorsi che passano per il nodo $i$.
+
+E' possibile normalizzare questa misura dividendo per il numero di coppie di vertici che escludono il nodo considerato.
+\begin{align*}
+  C_B'(i) = C_B(i) / [(N-1)(N-2)/2] 
+\end{align*}
+
+\subsubsection*{Closeness Centrality}
+La misura di \textbf{closeness} quantifica la distanza media di uno \textit{shortest path} da un nodo a tutti gli altri.
+\begin{align*}
+  C_C(i) = \frac{1}{\sum_{j=1}^N d(i, j)}
+\end{align*}
+dove $d(i,j)$ é la distanza tra il nodo $i$ e il nodo $j$.
+
+E' possibile normalizzare questa misura moltiplicando per il numero di tutti i vertici del grafo escluso il nodo considerato.
+\begin{align*}
+  C_C'(i) = \frac{N - 1}{\sum_{j=1}^N d(i, j)} = (N-1) \; C_C(i)
+\end{align*}
+%
+Se un nodo ha un valore alto di closeness allora sarà vicino a molti nodi nel grafo.
+Può essere interpretata come una misura di velocità per raggiungere un qualsiasi nodo della rete.
+
+\subsubsection*{Eigenvector Centrality}
+La \textbf{eigenvector centrality} misura l'influenza di un nodo all'interno del grafo.
+
+Un nodo é considerato importante se é collegato ad altri nodi importanti.
+Quindi un nodo che ha tanti archi entranti non ha necessariamente un alto valore di eigenvector centrality.
+%
+\begin{align*}
+  & \lambda\,C_E = A\,C_E & (A - \lambda\,I)\,C_E = 0,\quad \lambda \not= 0 &
+\end{align*}
+%
+Il valore che assume questa misura di centralità corrisponde all'autovettore $C_E$ associato all'autovalore più grande.
+
+\subsection*{Reciprocity}
+Dato un grafo \underline{diretto}, si definisce \textbf{reciprocità} il rapporto tra il numero di relazioni ricambiate e il totale di relazioni del grafo. 
+
+Due nodi hanno una relazione se esiste almeno un arco che li collega. 
+Una relazione si dice \textbf{ricambiata} se esiste un arco in entrambe le direzioni. 
+
+\subsection*{Density}
+La \textbf{densità} di un grafo indica quanto il grafo é connesso ed é definita dal rapporto tra il numero di archi della rete e il numero totale di archi possibili.
+\\
+\begin{minipage}{0.45\textwidth}
+  \centering
+  \begin{align*}
+    D = \frac{2|E|}{N (N - 1)}
+  \end{align*}
+  \small\textit{grafo diretto}
+\end{minipage}
+\hfill
+\begin{minipage}{0.45\textwidth}
+  \centering
+  \begin{align*}
+    D = \frac{|E|}{N (N - 1)}
+  \end{align*}
+  \small\textit{grafo indiretto}
+\end{minipage}
+
+Un grafo con densità 1 é completamente connesso e prende il nome di \textbf{clique}.
+
+\section{Community Detection}
+
